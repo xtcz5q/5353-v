@@ -221,17 +221,6 @@ app.get('/api', (req, res) => {
   res.json({ success: true, message: '技能五子棋后端 API', version: '1.0.0' });
 });
 
-app.get('/', (req, res) => {
-  try {
-    const htmlPath = path.join(__dirname, 'index.html');
-    const htmlContent = fs.readFileSync(htmlPath, 'utf-8');
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.send(htmlContent);
-  } catch (error) {
-    res.status(500).send('无法加载页面: ' + error.message);
-  }
-});
-
 module.exports = (req, res) => {
   app(req, res);
 };

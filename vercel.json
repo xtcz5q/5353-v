@@ -4,6 +4,10 @@
     {
       "src": "server-vercel.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "public/index.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -13,15 +17,7 @@
     },
     {
       "src": "/",
-      "dest": "server-vercel.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "server-vercel.js"
+      "dest": "/public/index.html"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "PORT": "3000"
-  }
+  ]
 }
