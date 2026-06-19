@@ -1,0 +1,45 @@
+{
+  "name": "gomoku-backend",
+  "version": "1.0.0",
+  "description": "技能五子棋后端系统 - 提供完整的用户认证、数据同步、实时通信功能",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server-memory.js",
+    "dev": "nodemon server-memory.js",
+    "vercel-build": "npm install",
+    "test": "jest"
+  },
+  "keywords": [
+    "gomoku",
+    "game",
+    "backend",
+    "websocket",
+    "realtime"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.7.2",
+    "uuid": "^9.0.1",
+    "compression": "^1.7.4",
+    "express-mongo-sanitize": "^2.2.0",
+    "xss-clean": "^0.1.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
