@@ -1,9 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const fs = require('fs');
-const path = require('path');
+const crypto = require('crypto');
 
 let users = {};
 let aiPlayers = {};
@@ -52,16 +50,16 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', (req, res) => {
   const { phone, password, nickname, avatar } = req.body;
   if (users[phone]) {
     return res.json({ success: false, message: '用户已存在' });
   }
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hash = crypto.createHash('sha256').update(password).digest('hex');
   const user = {
     userId: 'user_' + Date.now(),
     phone,
-    password: hashedPassword,
+    password: hash,
     nickname: nickname || '玩家' + Math.floor(Math.random() * 1000),
     avatar: avatar || '👤',
     stats: { skillPoints: 800, totalGames: 0, wins: 0, losses: 0 },
@@ -73,14 +71,14 @@ app.post('/api/auth/register', async (req, res) => {
   res.json({ success: true, data: { user, token } });
 });
 
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', (req, res) => {
   const { phone, password } = req.body;
   const user = users[phone];
   if (!user) {
     return res.json({ success: false, message: '用户不存在' });
   }
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
+  const hash = crypto.createHash('sha256').update(password).digest('hex');
+  if (user.password !== hash) {
     return res.json({ success: false, message: '密码错误' });
   }
   const token = jwt.sign({ userId: user.userId, phone }, 'gomoku_secret_key_2024', { expiresIn: '7d' });
