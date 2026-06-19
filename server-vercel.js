@@ -300,9 +300,12 @@ app.get('/api', (req, res) => {
 });
 
 // 默认路由 - 返回前端页面
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   try {
-    const htmlPath = path.join(__dirname, 'index.html');
+    let htmlPath = path.join(__dirname, 'public', 'index.html');
+    if (!fs.existsSync(htmlPath)) {
+      htmlPath = path.join(__dirname, 'index.html');
+    }
     const htmlContent = fs.readFileSync(htmlPath, 'utf-8');
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(htmlContent);
