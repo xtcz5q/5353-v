@@ -8,6 +8,8 @@ const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const path = require('path');
 
 // 内存存储
 let users = {};
@@ -299,7 +301,14 @@ app.get('/api', (req, res) => {
 
 // 默认路由 - 返回前端页面
 app.get('*', (req, res) => {
-  res.sendFile('index.html', { root: '.' });
+  try {
+    const htmlPath = path.join(__dirname, 'index.html');
+    const htmlContent = fs.readFileSync(htmlPath, 'utf-8');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(htmlContent);
+  } catch (error) {
+    res.status(500).send('无法加载页面');
+  }
 });
 
 // Vercel Serverless 导出 - 需要导出处理函数
