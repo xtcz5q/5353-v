@@ -302,5 +302,7 @@ app.get('*', (req, res) => {
   res.sendFile('index.html', { root: '.' });
 });
 
-// Vercel Serverless 导出
-module.exports = app;
+// Vercel Serverless 导出 - 需要导出处理函数
+module.exports = (req, res) => {
+  app(req, res);
+};
