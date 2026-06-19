@@ -16,8 +16,19 @@
       "dest": "server-vercel.js"
     },
     {
+      "src": "/health",
+      "dest": "server-vercel.js"
+    },
+    {
       "src": "/",
       "dest": "/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
