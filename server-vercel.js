@@ -299,7 +299,7 @@ app.get('/api', (req, res) => {
 
 // 默认路由 - 返回前端页面
 app.get('*', (req, res) => {
-  res.sendFile('index.html', { root: './public' });
+  res.sendFile('index.html', { root: '.' });
 });
 
 // Vercel Serverless 导出
