@@ -302,13 +302,27 @@ app.get('/api', (req, res) => {
 // 默认路由 - 返回前端页面
 app.get('/', (req, res) => {
   try {
-    let htmlPath = path.join(__dirname, 'public', 'index.html');
-    if (!fs.existsSync(htmlPath)) {
-      htmlPath = path.join(__dirname, 'index.html');
+    const possiblePaths = [
+      path.join(__dirname, 'index.html'),
+      path.join(__dirname, 'public', 'index.html'),
+      path.join(process.cwd(), 'index.html'),
+      path.join(process.cwd(), 'public', 'index.html')
+    ];
+    
+    let htmlContent = null;
+    for (const htmlPath of possiblePaths) {
+      if (fs.existsSync(htmlPath)) {
+        htmlContent = fs.readFileSync(htmlPath, 'utf-8');
+        break;
+      }
     }
-    const htmlContent = fs.readFileSync(htmlPath, 'utf-8');
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.send(htmlContent);
+    
+    if (htmlContent) {
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.send(htmlContent);
+    } else {
+      res.status(404).send('页面未找到');
+    }
   } catch (error) {
     res.status(500).send('无法加载页面');
   }

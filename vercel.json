@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "public/**/*",
-      "use": "@vercel/static"
-    },
-    {
       "src": "server-vercel.js",
       "use": "@vercel/node"
     }
@@ -16,8 +12,12 @@
       "dest": "server-vercel.js"
     },
     {
+      "src": "/",
+      "dest": "server-vercel.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/public/$1"
+      "dest": "server-vercel.js"
     }
   ],
   "env": {
